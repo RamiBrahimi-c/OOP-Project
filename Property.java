@@ -90,6 +90,7 @@ public class Property {
                 + owner + ", rentPrice=" + rentPrice + ", tenant=" + tenant + "]";
     }
 
+    
 
 
 

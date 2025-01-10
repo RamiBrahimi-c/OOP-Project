@@ -5,18 +5,21 @@ public class Transaction {
     private Client client2 ;
     private double price ;
     private Property property ;
+    private String type ;
 
-    public Transaction( Client client1 , Client client2 ,double price ,Property property ) {
-        this.client1 = client1 ;
-        this.client2 = client2 ;
-        this.price = price ;
-        this.property = property ;
+    public Transaction(Client client1, Client client2, double price, Property property, String type) {
+        this.client1 = client1;
+        this.client2 = client2;
+        this.price = price;
+        this.property = property;
+        this.type = type;
     }
-    public Transaction() {
+        public Transaction() {
         this.client1 = null ;
         this.client2 = null ;
         this.price = 0 ;
         this.property = null ;
+            this.type = null ;
     }
 
     // setters && getters
@@ -71,5 +74,12 @@ public class Transaction {
 
         return true ;
     }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+
 
 }

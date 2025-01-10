@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Client {
+public class Client implements Comparable<Client>{
     
     private String name ; 
     private String address ; 
@@ -105,6 +105,11 @@ public class Client {
          */
         return true ;
     }
+    @Override
+    public int compareTo(Client arg0) {
+        return name.compareTo(arg0.name) ;
+    }
+    
 
 
 }
