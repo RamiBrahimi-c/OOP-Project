@@ -1,25 +1,36 @@
+import java.util.ArrayList;
 
-public class Transaction {
+public class Transaction implements Operation{
 
     private Client client1 ;
     private Client client2 ;
     private double price ;
     private Property property ;
-    private String type ;
+    private String date ;
+    // private String type ;
 
-    public Transaction(Client client1, Client client2, double price, Property property, String type) {
+    public Transaction(Client client1, Client client2, double price, Property property) {
         this.client1 = client1;
         this.client2 = client2;
         this.price = price;
         this.property = property;
-        this.type = type;
+        date = Date.year + "/" + Date.month + "/" + Date.day;
+                // this.type = type;
+    }
+    public Transaction(Client client1, Client client2, double price, Property property , String date) {
+        this.client1 = client1;
+        this.client2 = client2;
+        this.price = price;
+        this.property = property;
+        this.date = date;
+                // this.type = type;
     }
         public Transaction() {
         this.client1 = null ;
         this.client2 = null ;
         this.price = 0 ;
         this.property = null ;
-            this.type = null ;
+            // this.type = null ;
     }
 
     // setters && getters
@@ -49,14 +60,10 @@ public class Transaction {
     }
 
     // methods 
-    @Override
-    public String toString() {
-        return "Transaction [client1=" + this.client1 + ", client2=" + this.client2 + ", price=" + this.price + ", property="
-                + this.property + "]";
-    }
+    
 
 
-
+/* 
     public boolean rentProperty(Client tenant , Client landlord , Property property) {
         if (!landlord.getArr().contains(property)) {
             return false ;
@@ -73,12 +80,30 @@ public class Transaction {
         tenant.setBudget(tenant.getBudget() - property.getRentPrice());
 
         return true ;
-    }
-    public String getType() {
+    } */
+    
+    /* public String getType() {
         return type;
     }
     public void setType(String type) {
         this.type = type;
+    } */
+    @Override
+    public void setOperation(ArrayList<Transaction> transactions, ArrayList<Property> properties,
+            ArrayList<Client> clients ) { //, Property property ,Client seller , Client buyer
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setOperation'");
+    }
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
+    }
+    @Override
+    public String toString() {
+        return "Transaction [client1=" + client1 + ", client2=" + client2 + ", price=" + price + ", property="
+                + property + ", date=" + date + "]";
     }
 
 

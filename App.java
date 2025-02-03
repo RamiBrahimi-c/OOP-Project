@@ -7,16 +7,6 @@ import java.util.Scanner;
 
 public class App {
     //ArrayList<Property> arr ;
-    public static final String RESET = "\033[0m";     // Reset (default color)
-    public static final String BLACK = "\033[0;30m";  // Black
-    public static final String RED = "\033[0;31m";    // Red
-    public static final String GREEN = "\033[0;32m";  // Green
-    public static final String YELLOW = "\033[0;33m"; // Yellow
-    public static final String BLUE = "\033[0;34m";   // Blue
-    public static final String PURPLE = "\033[0;35m"; // Purple
-    public static final String CYAN = "\033[0;36m";   // Cyan
-    public static final String WHITE = "\033[0;37m";  // White
-
     
     public static void main(String[] args) {
         
@@ -30,19 +20,24 @@ public class App {
         ArrayList<Property> propreties = new ArrayList<>() ;
 
         clients.add(new Client("Ahmed","Batna zemala" , "0787461513", 20000)) ;
-        clients.add(new Client("Mohamed" , "Alger centre" , "0684958798" , 500)) ;
-        clients.add(new Client("Zaid", "Batna 5 juillet", "0513248794", 699)) ;
-        clients.add(new Client("Kheiro", "Alger bab zouar", "044687951", 134)) ; 
-        clients.add(new Client("Riad", "Setif al alia", "047846895", 134)) ;
+        clients.add(new Client("Mohamed" , "Alger centre" , "0684958798" , 13489)) ;
+        clients.add(new Client("Zaid", "Batna 5 juillet", "0513248794", 13498)) ;
+        clients.add(new Client("Kheiro", "Alger bab zouar", "044687951", 18475)) ; 
+        clients.add(new Client("Riad", "Setif al alia", "047846895", 13540)) ;
+        clients.add(new Client("Adem", "Blida Chreaa", "0748596218", 1000)) ;
         
-        propreties.add(new Property("Commercial", 600, "Alger", 400, clients.get(1) ,398)) ;
-        propreties.add(new Property("Residential", 700, "Setif", 500, clients.get(2), 450)) ;
-        propreties.add(new Property("Commercial", 800, "Annaba", 700, clients.get(3), 500)) ;
-        propreties.add(new Property("Industriel", 900, "Batna", 789, clients.get(4), 500)) ;
-        propreties.add(new Property("Special Use", 664, "Alger", 400, clients.get(4), 299)) ;
-         
 
-        clients.get(1).addProperty(propreties.get(0));
+        propreties.add(new Commercial( 600, "Alger", 400, clients.get(1) ,398)) ;
+        propreties.add(new Residential( 700, "Setif", 500, clients.get(2), 450)) ;
+        propreties.add(new Commercial( 800, "Annaba", 700, clients.get(3), 500)) ;
+        propreties.add(new Industrial( 900, "Batna", 789, clients.get(4), 500)) ;
+        propreties.add(new Rawland( 664, "Alger", 400, clients.get(4), 299)) ;
+         
+        transactions.add(new Sell(clients.get(0), clients.get(4), 10000, propreties.get(3)  , "2020/5/1")) ;
+        transactions.add(new Sell(clients.get(3), clients.get(1), 10000, propreties.get(0) , "2021/9/9")) ;
+        transactions.add(new Sell(clients.get(5), clients.get(2), 10000, propreties.get(1) , "2023/1/4") ) ;
+
+        // clients.get(1).addProperty(propreties.get(0));
 
 
         
@@ -84,6 +79,9 @@ public class App {
                 case 6:
                     printTransactions(transactions);
                     break;
+/*                 case 7 :
+                    Rent.setChangesOnRentedProperties(propreties, transactions);
+                    break; */
             
                 default:
                     condition=false ;
@@ -99,21 +97,24 @@ public class App {
     static void printPrincipalMenu() {
 
         String tab = "\t" ;
-        System.out.println(RED + "******************************************************");
+        System.out.println(Colors.RESET + Colors.RED + "******************************************************");
         System.out.println("***** Welcome to the real state Agency App ! *********");
-        System.out.println("******************************************************"+ RESET);
-        System.out.println( BLUE+tab + tab + "Options : " + RESET);
-        System.out.println(GREEN + tab + "0.Display this list");
+        System.out.println("******************************************************"+ Colors.RESET);
+        System.out.println( Colors.YELLOW+tab + tab + "Options : " + Colors.RESET);
+        System.out.println(Colors.GREEN + tab + "0.Display this list");
         System.out.println(tab +"1.add Client");
         System.out.println(tab +"2.add Property");
         System.out.println(tab +"3.add Transaction");
         System.out.println(tab +"4.See List of Clients");
         System.out.println(tab +"5.See List of Properties");
         System.out.println(tab +"6.See List of the Last Transactions");
-        System.out.println(tab +"7.Quit the program\n" + RESET);
-        System.out.println(RED + "******************************************************");
+        System.out.println(tab +"7.Quit the program\n" + Colors.RESET);
+        System.out.println(Colors.BLUE + "Date : " + Date.year + "/" + Date.month + "/" + Date.day + Colors.RESET);
+        System.out.println(Colors.RED + "******************************************************");
         System.out.println("******************************************************");
-        System.out.println("******************************************************" + RESET);
+        System.out.println(Colors.RED +"******************************************************");
+
+        System.out.println("******************************************************" + Colors.RESET);
 
     }
 
@@ -121,14 +122,15 @@ public class App {
     static void printClients(ArrayList <Client> clients , boolean showSmallMenu) {
         clearScreen();
         int  length = clients.size() ;
-        System.out.println("---------------------------------------------------------------------------------------------");
-        System.out.println("id\t\tName\t\tAddress\t\t\tPhone Number\t\tBudget\t");
-        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println(Colors.RED + "---------------------------------------------------------------------------------------------");
+        System.out.println("id\t\tName\t\tAddress\t\t\tPhone Number\t\tBudget\t" );
+        System.out.println("---------------------------------------------------------------------------------------------" + Colors.RESET);
         for (int i = 0; i < length; i++) {
             Client client = clients.get(i) ;
             System.out.println( (i+1) + "\t\t" + client.getName() + "\t\t"+ client.getAddress() + "\t\t"+ client.getPhoneNumber() + "\t\t"+ client.getBudget() + " $" );
         }
         System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println(Colors.BLUE + "Date : " + Date.year + "/" + Date.month + "/" + Date.day + Colors.RESET);
         System.out.println("total number = " + length);
         if (!showSmallMenu)
             return ;
@@ -184,7 +186,7 @@ public class App {
                                 break;
                         }
                     } else {
-                        System.out.println(RED+"Out OF Bound !" + RESET);
+                        System.out.println(Colors.RED+"Out OF Bound !" + Colors.RESET);
                     }
                     printClients(clients, false);
                     break;
@@ -247,15 +249,17 @@ public class App {
     static void printProperties(ArrayList <Property> properties , boolean showSmallMenu) {
         clearScreen();
         int length = properties.size() ;
-        System.out.println("---------------------------------------------------------------------------------------------------------------");
-        System.out.println("id\tType\t\tPrice\t\tLocation\tSize\t\tOwner Name\t\tRent Price\t");
-        System.out.println("---------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("id\tType\t\tPrice\t\tLocation\tSize\t\tOwner Name\t\tRent Price\tAvailable for Rent");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < length; i++) {
             Property property  = properties.get(i);
-            System.out.println(property.id+"\t" + property.getType() + "\t" + property.getPrice() + "\t\t" + property.getLocation() + "\t\t" + property.getSize() + " m²\t" + property.getOwner().getName() + "\t\t\t" +property.getPrice());
+            System.out.println(property.id+"\t" + property.toString() + "\t" + property.getPrice() + "\t\t" + property.getLocation() + "\t\t" + property.getSize() + " m²\t" + property.getOwner().getName() + "\t\t\t" +property.getPrice() + "\t\t\t" + (property.isAvailableForRent() ? "Yes" : "No"));
             
         }
-        System.out.println("---------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println(Colors.BLUE + "Date : " + Date.year + "/" + Date.month + "/" + Date.day + Colors.RESET);
+
         System.out.println("Total Number = " + length);
        if (!showSmallMenu)
             return ;
@@ -274,7 +278,7 @@ public class App {
                         --p ;
                         properties.remove(p) ;
                     } else {
-                        System.out.println(RED + "OUT OF BOUND !" + RESET);
+                        System.out.println(Colors.RED + "OUT OF BOUND !" + Colors.RESET);
                     }
                     break;
                 case 2 :
@@ -292,33 +296,42 @@ public class App {
                                 int o = scanner.nextInt() ;
                         
                                 String type = scanner.nextLine() ;
+                                Property temp  = properties.get(i) ;
+                                int temp_id = properties.get(i).id ;
+                                // temp.setId();
+                                // properties.get(i) = new Commercial() ;
+                                
                                 switch (o) {
                                     case 1:
-                                        type = "Residential" ;
+                                        // type = "Residential" ;
+                                        temp = new Residential(temp.getPrice() , temp.getLocation() , temp.getSize() , temp.getOwner() , temp.getRentPrice()) ;
                                         break;
                                         case 2:
-                                        type = "Commercial" ;
+                                        // type = "Commercial" ;
+                                        temp = new Commercial(temp.getPrice() , temp.getLocation() , temp.getSize() , temp.getOwner() , temp.getRentPrice()) ;
                                         
                                         break;
                                         case 3:
-                                        type = "Industrial" ;
+                                        // type = "Industrial" ;
+                                        temp = new Industrial(temp.getPrice() , temp.getLocation() , temp.getSize() , temp.getOwner() , temp.getRentPrice()) ;
                                         
                                         break;
                                         case 4:
-                                        type = "Raw Land" ;
+                                        // type = "Raw Land" ;
+                                        temp = new Rawland(temp.getPrice() , temp.getLocation() , temp.getSize() , temp.getOwner() , temp.getRentPrice()) ;
                                         
                                         break;
-                                        case 5:
-                                        type = "Special Use" ;
-                                        
-                                        break;
+
                                         
                                         default:
-                                        type = "Commercial" ;
+                                        // type = "Commercial" ;
+                                        temp = new Commercial(temp.getPrice() , temp.getLocation() , temp.getSize() , temp.getOwner() , temp.getRentPrice()) ;
                                         break;
                                 }
-                        
-                                properties.get(i).setType(type);
+                                temp.id = temp_id ;
+                                properties.remove(i) ;
+                                properties.add(i, temp);
+                                // properties.get(i).setType(type);
                                 break;
                             case 2:
                                 scanner.nextLine() ;
@@ -351,7 +364,7 @@ public class App {
                                 break;
                         }
                     } else {
-                        System.out.println(RED+"Out OF Bound !" + RESET);
+                        System.out.println(Colors.RED+"Out OF Bound !" + Colors.RESET);
                     }
                     printProperties(properties, false);
                     break;
@@ -454,44 +467,49 @@ public class App {
 
         System.out.println("-------------------- Inserting Property Process ---------------------");
 
-        System.out.println("Enter the Property's Type : (1.residential 2.commercial (Standard) 3.industrial 4.raw land 5.special use)");
+        System.out.println("Enter the Property's Type : (1.residential 2.commercial (Standard) 3.industrial 4.raw land )");
         int i = sc.nextInt() ;
 
+        Property temp ;
         String type = sc.nextLine() ;
         switch (i) {
             case 1:
                 type = "Residential" ;
+                 temp = new Residential() ;
                 break;
                 case 2:
                 type = "Commercial" ;
+                 temp = new Commercial() ;
                 
                 break;
                 case 3:
                 type = "Industrial" ;
+                 temp = new Industrial() ;
+                 
+                 break;
+                 case 4:
+                 type = "Raw Land" ;
+                 temp = new Rawland() ;
                 
                 break;
-                case 4:
-                type = "Raw Land" ;
-                
-                break;
-                case 5:
-                type = "Special Use" ;
-                
-                break;
+
                 
                 default:
                 type = "Commercial" ;
+                temp = new Commercial() ;
                 break;
         }
 
         
         System.out.println("Enter the Property's Price : ");
-        double price = sc.nextDouble() ;
+        temp.setPrice( sc.nextDouble() ); 
         sc.nextLine();
         System.out.println("Enter the Property's Location : ");
-        String location = sc.nextLine() ;
+        // String location = sc.nextLine() ;
+        temp.setLocation(sc.nextLine());
         System.out.println("Enter the Property's Size : ");
-        double size = sc.nextDouble() ;
+        // double size = sc.nextDouble() ;
+        temp.setSize(sc.nextDouble());
 
         // boolean i=true ;
         int j , k = 0 ;
@@ -513,9 +531,12 @@ public class App {
         //String ownerName =  clients.get(k).getName();
         
         System.out.println("Enter the Property's Rent Price : ");
-        double rentPrice = sc.nextInt() ;
+        // double rentPrice = sc.nextInt() ;
+        temp.setRentPrice(sc.nextDouble());
 
-        properties.add(new Property(type, price, location, size, clients.get(j), rentPrice)) ;
+        temp.setOwner(clients.get(j));
+        // properties.add(new Property(type, price, location, size, clients.get(j), rentPrice)) ;
+            properties.add(temp) ;
 
         System.out.println("------------------- Insertion Done Successfully ---------------------");
         try {
@@ -552,7 +573,9 @@ public class App {
 
         if (choice==1) {
             
-            do {
+            Sell operation = new Sell() ;
+            operation.setOperation(transactions, properties, clients);
+            /* do {
                 printProperties(properties , false);
                 System.out.println("Choose the property :");
                 i = scanner.nextInt() ;
@@ -567,7 +590,7 @@ public class App {
                 System.out.println("Choose the buyer :");
                 i = scanner.nextInt() ;
 
-            } while (i < 1 || i >= clients.size() );
+            } while (i < 1 || i > clients.size() );
             Client buyer = clients.get(--i) ;
             if (buyer.getBudget() < p.getPrice()) {
                 System.out.println(RED + buyer.getName() + "'s budget is not enough to buy the chosen property !" + RESET);
@@ -584,7 +607,7 @@ public class App {
             buyer.setBudget(buyer.getBudget()-p.getPrice());
             owner.setBudget(owner.getBudget()+p.getPrice());
 
-            Transaction transaction = new Transaction(owner ,buyer , p.getPrice() , p , "Sale");
+            Transaction transaction = new Transaction(owner ,buyer , p.getPrice() , p );
             transactions.add(transaction) ;
             System.out.println(GREEN+"Operation done succefully" + RESET);
             try {
@@ -592,9 +615,10 @@ public class App {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return ;
+            return ; */
         } else if (choice==2) {
-            
+            Rent operation = new Rent() ;
+            operation.setOperation(transactions, properties, clients);
         }
     }
 
@@ -602,15 +626,16 @@ public class App {
         clearScreen();
         System.out.println("************************* List of the Transactions ****************************");
         System.out.println("-------------------------------------------------------------------------------");
-        System.out.println("N° \tPrice\tType\tClient 1\tClient 2\tProperty ID");
+        System.out.println("N° \tPrice\tType\tClient 1\tClient 2\tProperty ID\tDate");
         System.out.println("-------------------------------------------------------------------------------");
         
         int j = 0 ;
         for (Transaction i : transactions) {
-            System.out.println((++j) +"\t"+i.getPrice()+"\t" + i.getType() +"\t"+ i.getClient1().getName() +"\t\t"+ i.getClient2().getName() +"\t\t"+ i.getProperty().id);
+            System.out.println((++j) +"\t"+i.getPrice()+"\t" + i.toString() +"\t"+ i.getClient1().getName() +"\t\t"+ i.getClient2().getName() +"\t\t"+ i.getProperty().id + "\t\t" + i.getDate() );
             
         }
         System.out.println("-------------------------------------------------------------------------------");
+        System.out.println(Colors.BLUE + "Date : " + Date.year + "/" + Date.month + "/" + Date.day + Colors.RESET);
         System.out.println("Total number : " + j);
 
         try {

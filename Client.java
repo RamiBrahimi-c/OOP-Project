@@ -88,7 +88,7 @@ public class Client implements Comparable<Client>{
 
 
     public void addProperty(Property p) {
-        this.properties.add(0 , new Property(p.getType(), p.getPrice(), p.getLocation(), p.getSize(), new Client(p.getOwner().getName(), p.getOwner().getAddress(), p.getOwner().getPhoneNumber(), p.getOwner().getBudget()), p.getRentPrice())) ;
+        this.properties.add(0 , new Property( p.getPrice(), p.getLocation(), p.getSize(), new Client(p.getOwner().getName(), p.getOwner().getAddress(), p.getOwner().getPhoneNumber(), p.getOwner().getBudget()), p.getRentPrice())) ;
     }
 
     public boolean sellProperty(Client seller , Client buyer , Property property ) {
